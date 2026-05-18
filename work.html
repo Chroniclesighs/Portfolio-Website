@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reign art portfolio</title>
+    
+    <link rel="preload" href="layout img/background.webp" as="image">
+    <link rel="preload" href="layout img/Hmenu graphic.png" as="image">
+
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* ==========================================================================
+       GLOBAL
+       ========================================================================== */
+    html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        width: 100%;
+        overflow-x: hidden; 
+    }
+    
+    #background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+    }
+
+    .ref2 {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; 
+    }
+
+    /* Inner graphic rules */
+    .art1, .art2, .art3, .art4, .bsy, .bsg, .bsb, .bsp,
+    .ppr, .ppr2, .ppr3, .ppr4, .r1, .r2, .c1, .c2, .menu, .ig, .res, .outlook {
+        width: 100%;
+        height: 100%;
+        display: block;
+    }
+
+    .popup-overlay {
+        display: none; 
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.9); 
+        z-index: 1000; 
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px); 
+    }
+
+    .popup-content {
+        width: 90%;
+        max-width: 800px;
+        max-height: 85vh;
+        text-align: center;
+    }
+
+    /* Horizontal swipe/scroll track layout configuration */
+    .gallery-track {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory; 
+        gap: 20px;
+        padding-bottom: 10px;
+        scrollbar-width: none; 
+        -ms-overflow-style: none; 
+    }
+
+    .gallery-track::-webkit-scrollbar {
+        display: none; 
+    }
+
+    .gallery-track img {
+        width: 100%;
+        flex-shrink: 0; 
+        max-height: 70vh;
+        object-fit: contain;
+        scroll-snap-align: center; 
+    }
+
+    .gallery-track video {
+    width: 100%;
+    flex-shrink: 0; 
+    max-height: 70vh;
+    object-fit: contain;
+    scroll-snap-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background: #000; /* Keeps a dark background placeholder behind the video box */
+}
+
+    /*--Pop up screen */
+    .popup-content p {
+        color: #fff;
+        font-family: sans-serif;
+        margin-top: 15px;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: #fff;
+        font-size: 40px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .close-btn:hover {
+        color: rgb(218, 0, 185); 
+    }
+
+    /* ==========================================================================
+       MOBILE VER
+       ========================================================================== */
+    @media screen and (max-width: 767px) {
+        html, body {
+            overflow-x: hidden;
+            width: 100%; 
+            overflow-y: auto;   
+            text-align: center;
+        }
+
+        .page-wrapper {
+            width: 100vw;
+            position: relative;
+            overflow-x: hidden; 
+            overflow-y: hidden; 
+            height: 480vw; 
+        }
+
+        #home      { width: 25vw; height: 25vw; left: 5%; top: 2vw; z-index: 90; position: absolute; }
+        #resume    { width: 25vw; height: 25vw; left: 30%; top: 2vw; z-index: 90; position: absolute; }
+        #insta     { width: 15vw; height: 15vw; left: 60%; top: 2vw; z-index: 90; position: absolute; }
+        #mail      { width: 15vw; height: 15vw; left: 80%; top: 2vw; z-index: 90; position: absolute; }
+
+        #art1      { width: 63vw; height: 39vw; left: 30%; top: 56vw; z-index: 3; position: absolute; transform: rotate(3deg); }
+        #art2      { width: 48.5vw; height: 59vw; left: 40%; top: 153vw; z-index: 2; position: absolute; transform: rotate(5deg); }
+        #art3      { width: 57vw; height: 35vw; left: 28%; top: 245vw; z-index: 2; position: absolute; transform: rotate(-10deg); }
+        #art4      { width: 48.5vw; height: 59vw; left: 45%; top: 320vw; z-index: 2; position: absolute; transform: rotate(10deg); }
+
+        #paper     { width: 66vw; height: 88vw; left: 30%; top: 65vw; z-index: 2; position: absolute; transform: rotate(-105deg); }
+        #paper2    { width: 66vw; height: 88vw; left: 28%; top: 125vw; z-index: 1; position: absolute; transform: rotate(-65deg); }
+        #paper3    { width: 66vw; height: 88vw; left: 28%; top: 229vw; z-index: 1; position: absolute; transform: rotate(85deg); }
+        #paper4    { width: 66vw; height: 88vw; left: 35%; top: 350vw; z-index: 1; position: absolute; transform: rotate(-85deg); }
+
+        #stickyG   { width: 48vw; height: 57vw; left: 50%; top: 80vw; z-index: 3; position: absolute; transform: rotate(5deg); }
+        #stickyY   { width: 48vw; height: 57vw; left: 20%; top: 185vw; z-index: 2; position: absolute; transform: rotate(-10deg); }
+        #stickyP   { width: 48vw; height: 57vw; left: 60%; top: 245vw; z-index: 2; position: absolute; transform: rotate(5deg); }
+        #stickyB   { width: 48vw; height: 57vw; left: 39%; top: 359vw; z-index: 5; position: absolute; transform: rotate(-5deg); }
+
+        #clip1     { width: 35vw; height: 39vw; left: 53%; top: 125vw; z-index: 4; position: absolute; }
+        #clip2     { width: 35vw; height: 39vw; left: 20%; top: 348vw; z-index: 6; position: absolute; transform: rotate(10deg); }
+
+        #ruler2    { width: 248vw; height: 60vw; left: -30%; top: -28vw; z-index: 2; position: absolute; transform: rotate(1deg); }
+        #ruler1    { width: 248vw; height: 67vw; left: -80%; top: 415vw; z-index: 2; position: absolute; transform: rotate(165deg); }
+
+        .collage {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            transform: translateX(-11vw); 
+        }
+    }
+    /* ==========================================================================
+       DESKTOP VER
+       ========================================================================== */
+    @media screen and (min-width: 768px) {
+        body {
+            overflow-y: auto; 
+        }
+
+        .page-wrapper {
+            position: static;    
+            overflow: visible;   
+        }
+
+        .collage {
+            position: static;
+            width: auto;
+            transform: none;
+        }
+        
+        #home { width: 150px; height: 150px; position: absolute; left: 55%; top: 20px; z-index: 90; }
+        #resume { width: 150px; height: 150px; position: absolute; left: 65%; top: 20px; z-index: 90; }
+        #insta { width: 120px; height: 120px; position: absolute; left: 75%; top: 20px; z-index: 90; }
+        #mail { width: 120px; height: 120px; position: absolute; left: 85%; top: 20px; z-index: 90; }
+
+        #art1 { width: 630px; height: 390px; position: absolute; left: 30%; top: 560px; z-index: 3; transform: rotate(3deg); }
+        #art2 { width: 485px; height: 590px; position: absolute; left: 40%; top: 1530px; z-index: 2; transform: rotate(5deg); }
+        #art3 { width: 570px; height: 350px; position: absolute; left: 28%; top: 2450px; z-index: 2; transform: rotate(-10deg); }
+        #art4 { width: 485px; height: 590px; position: absolute; left: 45%; top: 3200px; z-index: 2; transform: rotate(10deg); }
+
+        #paper { width: 660px; height: 880px; position: absolute; left: 30%; top: 650px; z-index: 2; transform: rotate(-105deg); }
+        #paper2 { width: 660px; height: 880px; position: absolute; left: 28%; top: 1250px; z-index: 1; transform: rotate(-65deg); }
+        #paper3 { width: 660px; height: 880px; position: absolute; left: 28%; top: 2290px; z-index: 1; transform: rotate(85deg); }
+        #paper4 { width: 660px; height: 880px; position: absolute; left: 35%; top: 3500px; z-index: 1; transform: rotate(-85deg); }
+
+        #ruler1 { width: 2480px; height: 670px; position: absolute; left: -50%; top: 4150px; z-index: 2; transform: rotate(165deg); }
+        #ruler2 { width: 2480px; height: 600px; position: absolute; left: -30%; top: -280px; z-index: 2; transform: rotate(1deg); }
+
+        #stickyY { width: 480px; height: 570px; position: absolute; left: 20%; top: 1850px; z-index: 2; transform: rotate(-10deg); }
+        #stickyB { width: 480px; height: 570px; position: absolute; left: 35%; top: 3620px; z-index: 5; transform: rotate(-5deg); }
+        #stickyG { width: 480px; height: 570px; position: absolute; left: 50%; top: 750px; z-index: 3; transform: rotate(5deg); }
+        #stickyP { width: 480px; height: 570px; position: absolute; left: 60%; top: 2450px; z-index: 2; transform: rotate(5deg); }
+
+        #clip1 { width: 350px; height: 390px; position: absolute; left: 53%; top: 1250px; z-index: 4; }
+        #clip2 { width: 350px; height: 390px; position: absolute; left: 20%; top: 3480px; z-index: 6; transform: rotate(10deg); }
+    }
+
+    #art1:hover, #art2:hover, #art3:hover, #art4:hover {
+        animation: wiggle 0.3s infinite linear;
+        cursor: pointer; 
+    }
+
+    @keyframes wiggle {
+        0%   { transform: rotate(0deg); }
+        25%  { transform: rotate(1deg) translate(1px, -1px); }
+        50%  { transform: rotate(0deg) translate(-1px, 1px); }
+        75%  { transform: rotate(-1deg) translate(1px, 1px); }
+        100% { transform: rotate(0deg) translate(0, 0); }
+    }
+    </style>
+</head>
+<body>
+
+    <div class="page-wrapper">
+
+        <div id="background">
+            <img src="layout img/background.webp" class="ref2" alt="Background" fetchpriority="high">
+        </div>
+
+        <!-- Navigation Hub -->
+        <a href="index.html">
+            <div id="home"><img src="layout img/Hmenugraphic.webp" class="menu" alt="menu" fetchpriority="high"></div>
+        </a>
+        <a href="https://docs.google.com/document/d/16qZalmmYdzLHEjTzCTsXj_I3jqJJpDpy56U9q3vi2lI/edit?usp=sharing">
+            <div id="resume"><img src="layout img/Rmenugraphic.webp" class="res" alt="resume"></div>
+        </a>
+        <a href="https://www.instagram.com/chroniclesighs/">
+            <div id="insta"><img src="layout img/ig.webp" class="ig" alt="socials"></div>
+        </a>
+        <a href="mailto:r.nunezbailey@outlook.com">
+            <div id="mail"><img src="layout img/mail.webp" class="outlook" alt="mail"></div>
+        </a>
+
+        <div class="collage">
+        
+            <div id="art1" onclick="openPopup(['layout img/DESN241-ReignNunez-Project1-Final.webp', 'layout img/Project1-2-.webp', 'layout img/Project1-3.webp'], 'Design, DESN 241 Project 1, 2026')">
+                <img src="layout img/DESN241-ReignNunez-Project1-Final.webp" class="art1" alt="art1" loading="lazy">
+            </div>
+
+            <div id="art2" onclick="openPopup(['layout img/0001.webp','layout img/0002.webp', 'layout img/0003.webp', 'layout img/0004.webp', 'layout img/0005.webp', 'layout img/0006.webp'],'Typography, DESN 242 Project 3, 2026')">
+                <img src="layout img/0001.webp" class="art2" alt="art2" loading="lazy">
+            </div>
+
+            <div id="art3" onclick="openPopup('layout img/bunnypromovid2.mp4', 'Bunnyfolks Picture Book, 2025')">
+                <img src="layout img/Bunnyfolks compressed gif promo.gif" class="art3" alt="art3" loading="lazy">
+            </div>
+
+            <div id="art4" onclick="openPopup(['layout img/0001.png','layout img/0002.png', 'layout img/0003.png', 'layout img/0004.png', 'layout img/0005.png', 'layout img/0006.png'],'DESN 242 Project 3')">
+                <img src="layout img/final pg1.png" class="art4" alt="art4" loading="lazy">
+            </div>
+
+            <div id="paper"><img src="layout img/paper.webp" class="ppr" alt="paper" loading="lazy"></div>
+            <div id="paper2"><img src="layout img/paper.webp" class="ppr2" alt="paper2" loading="lazy"></div>
+            <div id="paper3"><img src="layout img/paper.webp" class="ppr3" alt="paper3" loading="lazy"></div>
+            <div id="paper4"><img src="layout img/paper.webp" class="ppr4" alt="paper4" loading="lazy"></div>
+
+            <div id="clip1"><img src="layout img/paperclip1.webp" class="c1" alt="pprclip" loading="lazy"></div>
+            <div id="clip2"><img src="layout img/paperclip2.webp" class="c2" alt="pprclip2" loading="lazy"></div>
+
+            <div id="stickyG"><img src="layout img/BstickyG.webp" class="bsg" alt="stickyg" loading="lazy"></div>
+            <div id="stickyY"><img src="layout img/BstickyY.webp" class="bsy" alt="stickyy" loading="lazy"></div>
+            <div id="stickyB"><img src="layout img/BstickyB.webp" class="bsb" alt="stickyb" loading="lazy"></div>
+            <div id="stickyP"><img src="layout img/BstickyP.webp" class="bsp" alt="stickyp" loading="lazy"></div>
+        </div>
+
+        <div id="ruler2"><img src="layout img/ruler2.webp" class="r2" alt="r2" loading="lazy"></div>
+        <div id="ruler1"><img src="layout img/ruler1.webp" class="r1" alt="r1" loading="lazy"></div>
+
+    </div>
+
+    <!--HTML POPUP -->
+    <div id="artOverlay" class="popup-overlay">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <div class="popup-content">
+            <div id="popupGalleryTrack" class="gallery-track"></div>
+            <p id="popupCaption"></p>
+            <small id="swipeIndicator" style="color: #a0a0a0; display: block; margin-top: 5px; font-family: sans-serif;"></small>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+     function openPopup(imageInput, captionText) {
+    const overlay = document.getElementById('artOverlay');
+    const track = document.getElementById('popupGalleryTrack');
+    const caption = document.getElementById('popupCaption');
+    const indicator = document.getElementById('swipeIndicator');
+    
+    track.innerHTML = '';
+    caption.textContent = captionText;
+
+    const imageList = Array.isArray(imageInput) ? imageInput : [imageInput];
+
+    imageList.forEach(src => {
+        // Check if the current file link ends in .mp4
+        if (src.toLowerCase().endsWith('.mp4')) {
+            // Build a responsive native video player container block
+            const videoElement = document.createElement('video');
+            videoElement.src = src;
+            videoElement.controls = true;      // Gives users play/pause/volume controls
+            videoElement.autoplay = true;      // Starts playing right when opened
+            videoElement.playsInline = true;   // Prevents iOS from forcing full-screen mode
+            videoElement.loop = true;          // Loops seamlessly like your showcase GIFs
+            
+            track.appendChild(videoElement);
+        } else {
+            // Standard image tracking logic fallback
+            const imgElement = document.createElement('img');
+            imgElement.src = src;
+            imgElement.alt = "Gallery View Element";
+            track.appendChild(imgElement);
+        }
+    });
+
+    if (imageList.length > 1) {
+        indicator.textContent = "↔ Swipe or scroll sideways to view all pages";
+    } else {
+        indicator.textContent = "";
+    }
+    
+    overlay.style.display = 'flex';
+    track.scrollLeft = 0;
+}
+
+function closePopup() {
+    // Crucial: We need to pause any active playing videos when closing the window!
+    const track = document.getElementById('popupGalleryTrack');
+    const videos = track.getElementsByTagName('video');
+    for (let i = 0; i < videos.length; i++) {
+        videos[i].pause();
+    }
+
+    document.getElementById('artOverlay').style.display = 'none';
+    track.innerHTML = ''; // Safely clears out the player instance from device memory
+}
+    </script>
+
+</body>
+</html>
