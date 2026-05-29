@@ -15,9 +15,7 @@
         box-sizing: border-box;
     }
 
-    /* ==========================================================================
-       GLOBAL
-       ========================================================================== */
+    /*global css*/
     html, body {
         margin: 0;
         padding: 0;
@@ -367,6 +365,7 @@
 
 function closePopup() {
     // Crucial: We need to pause any active playing videos when closing the window!
+    document.getElementById('artOverlay').style.display = 'none';
     const track = document.getElementById('popupGalleryTrack');
     const videos = track.getElementsByTagName('video');
     for (let i = 0; i < videos.length; i++) {
@@ -376,6 +375,13 @@ function closePopup() {
     document.getElementById('artOverlay').style.display = 'none';
     track.innerHTML = ''; // Safely clears out the player instance from device memory
 }
+
+window.onclick = function(event) {
+    const overlay = document.getElementById('artOverlay');
+    if (event.target === overlay) {
+            closePopup();
+        }
+    }
     </script>
 
 </body>
